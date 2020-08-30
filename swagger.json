@@ -1,1054 +1,1220 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "description": "This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
-      "version": "1.0.5",
-      "title": "Swagger Petstore",
-      "termsOfService": "http://swagger.io/terms/",
-      "contact": {
-        "email": "apiteam@swagger.io"
-      },
-      "license": {
-        "name": "Apache 2.0",
-        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-      }
-    },
-    "host": "petstore.swagger.io",
-    "basePath": "/v2",
-    "tags": [
+  "openapi": "3.0.3",
+  "info": {
+      "version": "1.0.0",
+      "title": "MAX Aspire API",
+      "description": "MAX Aspire API Documentation"
+  },
+  "host": "https://vx4dosp9t1.execute-api.us-east-1.amazonaws.com/",
+  "basePath": "/Prod",
+  "tags": [
       {
-        "name": "pet",
-        "description": "Everything about your Pets",
-        "externalDocs": {
-          "description": "Find out more",
-          "url": "http://swagger.io"
-        }
+          "name": "Users",
+          "description": "API for Users Service"
       },
       {
-        "name": "store",
-        "description": "Access to Petstore orders"
+          "name": "Chats",
+          "description": "API for Chats Service"
       },
       {
-        "name": "user",
-        "description": "Operations about user",
-        "externalDocs": {
-          "description": "Find out more about our store",
-          "url": "http://swagger.io"
-        }
+          "name": "Jobs",
+          "description": "API for Jobs Service"
+      },
+      {
+          "name": "JobApplications",
+          "description": "API for Job Applications Service"
+      },
+      {
+          "name": "IndustryTags",
+          "description": "API for Industry Tags Service"
+      },
+      {
+          "name": "Payment",
+          "description": "API for payment validation"
       }
-    ],
-    "schemes": [
-      "https",
-      "http"
-    ],
-    "paths": {
-      "/pet/{petId}/uploadImage": {
-        "post": {
-          "tags": [
-            "pet"
-          ],
-          "summary": "uploads an image",
-          "description": "",
-          "operationId": "uploadFile",
-          "consumes": [
-            "multipart/form-data"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "name": "petId",
-              "in": "path",
-              "description": "ID of pet to update",
-              "required": true,
-              "type": "integer",
-              "format": "int64"
-            },
-            {
-              "name": "additionalMetadata",
-              "in": "formData",
-              "description": "Additional data to pass to server",
-              "required": false,
-              "type": "string"
-            },
-            {
-              "name": "file",
-              "in": "formData",
-              "description": "file to upload",
-              "required": false,
-              "type": "file"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "successful operation",
-              "schema": {
-                "$ref": "#/definitions/ApiResponse"
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+      "/": {
+          "get": {
+              "tags": ["Index"],
+              "description": "Returns API Version",
+              "responses": {
+                  "200": {
+                      "$ref": "#/components/responses/GeneralResponse"
+                  }
               }
-            }
-          },
-          "security": [
-            {
-              "petstore_auth": [
-                "write:pets",
-                "read:pets"
-              ]
-            }
-          ]
-        }
+          }
       },
-      "/pet": {
-        "post": {
-          "tags": [
-            "pet"
-          ],
-          "summary": "Add a new pet to the store",
-          "description": "",
-          "operationId": "addPet",
-          "consumes": [
-            "application/json",
-            "application/xml"
-          ],
-          "produces": [
-            "application/json",
-            "application/xml"
-          ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "body",
-              "description": "Pet object that needs to be added to the store",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/Pet"
-              }
-            }
-          ],
-          "responses": {
-            "405": {
-              "description": "Invalid input"
-            }
-          },
-          "security": [
-            {
-              "petstore_auth": [
-                "write:pets",
-                "read:pets"
-              ]
-            }
-          ]
-        },
-        "put": {
-          "tags": [
-            "pet"
-          ],
-          "summary": "Update an existing pet",
-          "description": "",
-          "operationId": "updatePet",
-          "consumes": [
-            "application/json",
-            "application/xml"
-          ],
-          "produces": [
-            "application/json",
-            "application/xml"
-          ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "body",
-              "description": "Pet object that needs to be added to the store",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/Pet"
-              }
-            }
-          ],
-          "responses": {
-            "400": {
-              "description": "Invalid ID supplied"
-            },
-            "404": {
-              "description": "Pet not found"
-            },
-            "405": {
-              "description": "Validation exception"
-            }
-          },
-          "security": [
-            {
-              "petstore_auth": [
-                "write:pets",
-                "read:pets"
-              ]
-            }
-          ]
-        }
-      },
-      "/pet/findByStatus": {
-        "get": {
-          "tags": [
-            "pet"
-          ],
-          "summary": "Finds Pets by status",
-          "description": "Multiple status values can be provided with comma separated strings",
-          "operationId": "findPetsByStatus",
-          "produces": [
-            "application/json",
-            "application/xml"
-          ],
-          "parameters": [
-            {
-              "name": "status",
-              "in": "query",
-              "description": "Status values that need to be considered for filter",
-              "required": true,
-              "type": "array",
-              "items": {
-                "type": "string",
-                "enum": [
-                  "available",
-                  "pending",
-                  "sold"
-                ],
-                "default": "available"
+      "/payment": {
+          "post": {
+              "tags": ["Payment"],
+              "description": "Validate payment",
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/Payment"
+                          }
+                      }
+                  }
               },
-              "collectionFormat": "multi"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "successful operation",
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/Pet"
-                }
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  },
+                  "400": {
+                      "description": "Bad Request",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
               }
-            },
-            "400": {
-              "description": "Invalid status value"
-            }
-          },
-          "security": [
-            {
-              "petstore_auth": [
-                "write:pets",
-                "read:pets"
-              ]
-            }
-          ]
-        }
+          }       
+      }, 
+      "/create-db-models": {
+          "post": {
+              "tags": ["Index"],
+              "description": "Create Database Tables",
+              "responses": {
+                  "201": {
+                      "description": "Created"
+                  }
+              }
+          }
       },
-      "/pet/findByTags": {
-        "get": {
-          "tags": [
-            "pet"
-          ],
-          "summary": "Finds Pets by tags",
-          "description": "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
-          "operationId": "findPetsByTags",
-          "produces": [
-            "application/json",
-            "application/xml"
-          ],
-          "parameters": [
-            {
-              "name": "tags",
-              "in": "query",
-              "description": "Tags to filter by",
-              "required": true,
-              "type": "array",
-              "items": {
-                "type": "string"
+      "/chats": {
+          "post": {
+              "tags": ["Chats"],
+              "description": "Create new Chat",
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/Chat"
+                          }
+                      }
+                  }
               },
-              "collectionFormat": "multi"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "successful operation",
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/Pet"
-                }
+              "responses": {
+                  "201": {
+                      "description": "Created"
+                  },
+                  "400": {
+                      "description": "Bad Request",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
               }
-            },
-            "400": {
-              "description": "Invalid tag value"
-            }
           },
-          "security": [
-            {
-              "petstore_auth": [
-                "write:pets",
-                "read:pets"
-              ]
-            }
-          ],
-          "deprecated": true
-        }
-      },
-      "/pet/{petId}": {
-        "get": {
-          "tags": [
-            "pet"
-          ],
-          "summary": "Find pet by ID",
-          "description": "Returns a single pet",
-          "operationId": "getPetById",
-          "produces": [
-            "application/json",
-            "application/xml"
-          ],
-          "parameters": [
-            {
-              "name": "petId",
-              "in": "path",
-              "description": "ID of pet to return",
-              "required": true,
-              "type": "integer",
-              "format": "int64"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "successful operation",
-              "schema": {
-                "$ref": "#/definitions/Pet"
+          "get": {
+              "tags": ["Chats"],
+              "description": "Get All Chats",
+              "responses": {
+                  "200": {
+                      "description": "Ok",
+                      "allOf": [{
+                          "$ref": "#/components/responses/Chats"
+                      }]
+                  }
               }
-            },
-            "400": {
-              "description": "Invalid ID supplied"
-            },
-            "404": {
-              "description": "Pet not found"
-            }
+          }
+      },
+      "/chats/{chatId}": {
+          "parameters": [
+              {"$ref": "#/components/parameters/ChatIdPath"}
+          ],
+          "get": {
+              "tags": ["Chats"],
+              "description": "Get Chat with id",
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "allOf": [{
+                          "$ref": "#/components/responses/Chat"
+                      }]
+                  },
+                  "404": {
+                      "description": "Not Found",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
+              }
           },
-          "security": [
-            {
-              "api_key": []
-            }
-          ]
-        },
-        "post": {
-          "tags": [
-            "pet"
-          ],
-          "summary": "Updates a pet in the store with form data",
-          "description": "",
-          "operationId": "updatePetWithForm",
-          "consumes": [
-            "application/x-www-form-urlencoded"
-          ],
-          "produces": [
-            "application/json",
-            "application/xml"
-          ],
-          "parameters": [
-            {
-              "name": "petId",
-              "in": "path",
-              "description": "ID of pet that needs to be updated",
-              "required": true,
-              "type": "integer",
-              "format": "int64"
-            },
-            {
-              "name": "name",
-              "in": "formData",
-              "description": "Updated name of the pet",
-              "required": false,
-              "type": "string"
-            },
-            {
-              "name": "status",
-              "in": "formData",
-              "description": "Updated status of the pet",
-              "required": false,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "405": {
-              "description": "Invalid input"
-            }
-          },
-          "security": [
-            {
-              "petstore_auth": [
-                "write:pets",
-                "read:pets"
-              ]
-            }
-          ]
-        },
-        "delete": {
-          "tags": [
-            "pet"
-          ],
-          "summary": "Deletes a pet",
-          "description": "",
-          "operationId": "deletePet",
-          "produces": [
-            "application/json",
-            "application/xml"
-          ],
-          "parameters": [
-            {
-              "name": "api_key",
-              "in": "header",
-              "required": false,
-              "type": "string"
-            },
-            {
-              "name": "petId",
-              "in": "path",
-              "description": "Pet id to delete",
-              "required": true,
-              "type": "integer",
-              "format": "int64"
-            }
-          ],
-          "responses": {
-            "400": {
-              "description": "Invalid ID supplied"
-            },
-            "404": {
-              "description": "Pet not found"
-            }
-          },
-          "security": [
-            {
-              "petstore_auth": [
-                "write:pets",
-                "read:pets"
-              ]
-            }
-          ]
-        }
-      },
-      "/store/order": {
-        "post": {
-          "tags": [
-            "store"
-          ],
-          "summary": "Place an order for a pet",
-          "description": "",
-          "operationId": "placeOrder",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json",
-            "application/xml"
-          ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "body",
-              "description": "order placed for purchasing the pet",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/Order"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "successful operation",
-              "schema": {
-                "$ref": "#/definitions/Order"
-              }
-            },
-            "400": {
-              "description": "Invalid Order"
-            }
-          }
-        }
-      },
-      "/store/order/{orderId}": {
-        "get": {
-          "tags": [
-            "store"
-          ],
-          "summary": "Find purchase order by ID",
-          "description": "For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions",
-          "operationId": "getOrderById",
-          "produces": [
-            "application/json",
-            "application/xml"
-          ],
-          "parameters": [
-            {
-              "name": "orderId",
-              "in": "path",
-              "description": "ID of pet that needs to be fetched",
-              "required": true,
-              "type": "integer",
-              "maximum": 10,
-              "minimum": 1,
-              "format": "int64"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "successful operation",
-              "schema": {
-                "$ref": "#/definitions/Order"
-              }
-            },
-            "400": {
-              "description": "Invalid ID supplied"
-            },
-            "404": {
-              "description": "Order not found"
-            }
-          }
-        },
-        "delete": {
-          "tags": [
-            "store"
-          ],
-          "summary": "Delete purchase order by ID",
-          "description": "For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors",
-          "operationId": "deleteOrder",
-          "produces": [
-            "application/json",
-            "application/xml"
-          ],
-          "parameters": [
-            {
-              "name": "orderId",
-              "in": "path",
-              "description": "ID of the order that needs to be deleted",
-              "required": true,
-              "type": "integer",
-              "minimum": 1,
-              "format": "int64"
-            }
-          ],
-          "responses": {
-            "400": {
-              "description": "Invalid ID supplied"
-            },
-            "404": {
-              "description": "Order not found"
-            }
-          }
-        }
-      },
-      "/store/inventory": {
-        "get": {
-          "tags": [
-            "store"
-          ],
-          "summary": "Returns pet inventories by status",
-          "description": "Returns a map of status codes to quantities",
-          "operationId": "getInventory",
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": "successful operation",
-              "schema": {
-                "type": "object",
-                "additionalProperties": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
-          },
-          "security": [
-            {
-              "api_key": []
-            }
-          ]
-        }
-      },
-      "/user/createWithArray": {
-        "post": {
-          "tags": [
-            "user"
-          ],
-          "summary": "Creates list of users with given input array",
-          "description": "",
-          "operationId": "createUsersWithArrayInput",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json",
-            "application/xml"
-          ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "body",
-              "description": "List of user object",
-              "required": true,
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/User"
-                }
-              }
-            }
-          ],
-          "responses": {
-            "default": {
-              "description": "successful operation"
-            }
-          }
-        }
-      },
-      "/user/createWithList": {
-        "post": {
-          "tags": [
-            "user"
-          ],
-          "summary": "Creates list of users with given input array",
-          "description": "",
-          "operationId": "createUsersWithListInput",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json",
-            "application/xml"
-          ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "body",
-              "description": "List of user object",
-              "required": true,
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/User"
-                }
-              }
-            }
-          ],
-          "responses": {
-            "default": {
-              "description": "successful operation"
-            }
-          }
-        }
-      },
-      "/user/{username}": {
-        "get": {
-          "tags": [
-            "user"
-          ],
-          "summary": "Get user by user name",
-          "description": "",
-          "operationId": "getUserByName",
-          "produces": [
-            "application/json",
-            "application/xml"
-          ],
-          "parameters": [
-            {
-              "name": "username",
-              "in": "path",
-              "description": "The name that needs to be fetched. Use user1 for testing. ",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "successful operation",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            },
-            "400": {
-              "description": "Invalid username supplied"
-            },
-            "404": {
-              "description": "User not found"
-            }
-          }
-        },
-        "put": {
-          "tags": [
-            "user"
-          ],
-          "summary": "Updated user",
-          "description": "This can only be done by the logged in user.",
-          "operationId": "updateUser",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json",
-            "application/xml"
-          ],
-          "parameters": [
-            {
-              "name": "username",
-              "in": "path",
-              "description": "name that need to be updated",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "in": "body",
-              "name": "body",
-              "description": "Updated user object",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          ],
-          "responses": {
-            "400": {
-              "description": "Invalid user supplied"
-            },
-            "404": {
-              "description": "User not found"
-            }
-          }
-        },
-        "delete": {
-          "tags": [
-            "user"
-          ],
-          "summary": "Delete user",
-          "description": "This can only be done by the logged in user.",
-          "operationId": "deleteUser",
-          "produces": [
-            "application/json",
-            "application/xml"
-          ],
-          "parameters": [
-            {
-              "name": "username",
-              "in": "path",
-              "description": "The name that needs to be deleted",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "400": {
-              "description": "Invalid username supplied"
-            },
-            "404": {
-              "description": "User not found"
-            }
-          }
-        }
-      },
-      "/user/login": {
-        "get": {
-          "tags": [
-            "user"
-          ],
-          "summary": "Logs user into the system",
-          "description": "",
-          "operationId": "loginUser",
-          "produces": [
-            "application/json",
-            "application/xml"
-          ],
-          "parameters": [
-            {
-              "name": "username",
-              "in": "query",
-              "description": "The user name for login",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "password",
-              "in": "query",
-              "description": "The password for login in clear text",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "successful operation",
-              "headers": {
-                "X-Expires-After": {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "date in UTC when token expires"
-                },
-                "X-Rate-Limit": {
-                  "type": "integer",
-                  "format": "int32",
-                  "description": "calls per hour allowed by the user"
-                }
+          "put": {
+              "tags": ["Chats"],
+              "description": "Update Chat with id",
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/Chat"
+                          }
+                      }
+                  }
               },
-              "schema": {
-                "type": "string"
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "allOf": [{
+                          "$ref": "#/components/schemas/Chat"
+                      }]
+                  },
+                  "204": {
+                      "description": "No Content",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralResponse"
+                      }]
+                  },
+                  "404": {
+                      "description": "Not Found",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
               }
-            },
-            "400": {
-              "description": "Invalid username/password supplied"
-            }
+          },
+          "delete": {
+              "tags": ["Chats"],
+              "description": "Delete Chat with id",
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  },
+                  "404": {
+                      "description": "Not Found",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
+              }
           }
-        }
       },
-      "/user/logout": {
-        "get": {
-          "tags": [
-            "user"
-          ],
-          "summary": "Logs out current logged in user session",
-          "description": "",
-          "operationId": "logoutUser",
-          "produces": [
-            "application/json",
-            "application/xml"
-          ],
-          "parameters": [],
-          "responses": {
-            "default": {
-              "description": "successful operation"
-            }
-          }
-        }
-      },
-      "/user": {
-        "post": {
-          "tags": [
-            "user"
-          ],
-          "summary": "Create user",
-          "description": "This can only be done by the logged in user.",
-          "operationId": "createUser",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json",
-            "application/xml"
-          ],
+      "/chats/{chatId}/reserve": {
           "parameters": [
-            {
-              "in": "body",
-              "name": "body",
-              "description": "Created user object",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
+              {"$ref": "#/components/parameters/ChatIdPath"},
+              {"$ref": "#/components/parameters/UserIdQuery"}
           ],
-          "responses": {
-            "default": {
-              "description": "successful operation"
-            }
+          "put": {
+              "tags": ["Chats"],
+              "description": "user reserve chat",
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  },
+                  "404": {
+                      "description": "Not Found",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
+              }
           }
-        }
+      },
+      "/chats/{chatId}/unreserve": {
+          "parameters": [
+              {"$ref": "#/components/parameters/ChatIdPath"},
+              {"$ref": "#/components/parameters/UserIdQuery"}
+          ],
+          "put": {
+              "tags": ["Chats"],
+              "description": "user unreserve chat",
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  },
+                  "404": {
+                      "description": "Not Found",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
+              }
+          }
+      },
+      "/jobs": {
+          "post": {
+              "tags": ["Jobs"],
+              "description": "Create new Job",
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/Job"
+                          }
+                      }
+                  }
+              },
+              "responses": {
+                  "201": {
+                      "description": "OK",
+                      "allOf": [{
+                          "$ref": "#/components/responses/Jobs"
+                      }]
+                  },
+                  "401": {
+                      "description": "UnAuthorized",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  },
+                  "426": {
+                      "description": "Upgrade Membership",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
+              }
+          },
+          "get": {
+              "tags": ["Jobs"],
+              "description": "Get All Jobs",
+              "parameters": [
+                  {
+                      "name": "user_id",
+                      "in": "query",
+                      "description": "filter jobs by user_id",
+                      "required": false,
+                      "schema": {
+                          "type":"email"
+                      }
+                  },
+                  {
+                      "name": "status",
+                      "in": "query",
+                      "description": "filter jobs by status (open or closed)",
+                      "required": false,
+                      "schema": {
+                          "type": "string",
+                          "enum": ["OPEN", "CLOSED"]
+                      }
+                  },
+                  {
+                      "name": "page",
+                      "in": "query",
+                      "description": "filter jobs by page",
+                      "required": false,
+                      "schema": {
+                          "type":"integer"
+                      }
+                  },
+                  {
+                      "name": "page_size",
+                      "in": "query",
+                      "description": "specifies page_size for page, default is 3 when not specified",
+                      "required": false,
+                      "schema": {
+                          "type": "integer"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "Ok",
+                      "allOf": [{
+                          "$ref": "#/components/responses/Jobs"
+                      }]
+                  }
+              }
+          }
+      },
+      "/jobs/{jobId}": {
+          "parameters": [
+              {"$ref": "#/components/parameters/JobIdPath"}
+          ],
+          "get": {
+              "tags": ["Jobs"],
+              "description": "Get Job with id",
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "allOf": [{
+                          "$ref": "#/components/responses/Job"
+                      }]
+                  },
+                  "404": {
+                      "description": "Not Found",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
+              }
+          },
+          "put": {
+              "tags": ["Jobs"],
+              "description": "Update Job with id",
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/Job"
+                          }
+                      }
+                  }
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralResponse"
+                      }]
+                  },
+                  "404": {
+                      "description": "Not Found",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
+              }
+          },
+          "delete": {
+              "tags": ["Jobs"],
+              "description": "Delete Job with id",
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralResponse"
+                      }]
+                  },
+                  "404": {
+                      "description": "Not Found",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  },
+                  "409": {
+                      "description": "Conflict",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
+              }
+          }
+      },
+      "/jobs/{jobId}/close": {
+          "parameters": [
+              {"$ref": "#/components/parameters/JobIdPath"}
+          ],
+          "put": {
+              "tags": ["Jobs"],
+              "description": "Update Job status to CLOSED",
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralResponse"
+                      }]
+                  },
+                  "404": {
+                      "description": "Not Found",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
+              }
+          }
+      },
+      "/job_contact/{jobId}": {
+          "parameters": [
+              {"$ref": "#/components/parameters/JobIdPath"}
+          ],
+          "get": {
+              "tags": ["Jobs"],
+              "description": "Get Contact Information of the person who posted the job",
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "allOf": [{
+                          "$ref": "#/components/responses/JobContact"
+                      }]
+                  },
+                  "404": {
+                      "description": "UnAuthorized",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  },
+                  "401": {
+                      "description": "Not Found",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  },
+                  "428": {
+                      "description": "Pre-Condition Required",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  },
+                  "417": {
+                      "description": "Expectation Failed",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  },
+                  "402": {
+                      "description": "Payment Required",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  },
+                  "426": {
+                      "description": "Upgrade Membership",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
+              }
+          }
+      },
+      "/job-applications": {
+          "post": {
+              "tags": ["JobApplications"],
+              "description": "Create new Job Applications",
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/JobApplication"
+                          }
+                      }
+                  }
+              },
+              "responses": {
+                  "201": {
+                      "description": "Created"
+                  },
+                  "426": {
+                      "description": "Insufficient Privileges",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
+              }
+          },
+          "get": {
+              "tags": ["JobApplications"],
+              "description": "Get All Job Applications",
+              "responses": {
+                  "200": {
+                      "description": "Ok",
+                      "allOf": [{
+                          "$ref": "#/components/responses/JobApplications"
+                      }]
+                  },
+                  "404": {
+                      "description": "Not found",
+                      "allOf": [{
+                          "$ref": "#/components/responses/JobApplications"
+                      }]
+                  }                    
+              }
+          }
+      },
+      "/job-applications/{jobApplicationId}": {
+          "parameters": [
+              {"$ref": "#/components/parameters/JobApplicationIdPath"}
+          ],
+          "get": {
+              "tags": ["JobApplications"],
+              "description": "Get Job Applications with id",
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "allOf": [{
+                          "$ref": "#/components/responses/JobApplication"
+                      }]
+                  },
+                  "404": {
+                      "description": "Not Found",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
+              }
+          },
+          "put": {
+              "tags": ["JobApplications"],
+              "description": "Update Job Applications with id",
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/JobApplication"
+                          }
+                      }
+                  }
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "allOf": [{
+                          "$ref": "#/components/schemas/JobApplication"
+                      }]
+                  },
+                  "404": {
+                      "description": "Not Found",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
+              }
+          },
+          "delete": {
+              "tags": ["JobApplications"],
+              "description": "Delete Job Applications with id",
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  },
+                  "404": {
+                      "description": "Not Found",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
+              }
+          }
+      },
+      "/industry-tags": {
+          "post": {
+              "tags": ["IndustryTags"],
+              "description": "Create new Industry Tag",
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/IndustryTag"
+                          }
+                      }
+                  }
+              },
+              "responses": {
+                  "201": {
+                      "description": "Created"
+                  },
+                  "400": {
+                      "description": "Bad Request",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
+              }
+          },
+          "get": {
+              "tags": ["IndustryTags"],
+              "description": "Get All Industry Tags",
+              "parameters": [
+                  {
+                      "name": "search",
+                      "in": "query",
+                      "description": "filter response",
+                      "required": false,
+                      "schema": {
+                          "$ref": "#/components/schemas/IndustryTag/properties/tag"
+                      }
+                  },
+                  {
+                      "name": "fuzzy",
+                      "in": "query",
+                      "description": "enable fuzzy search",
+                      "required": false,
+                      "schema": {
+                          "type": "boolean"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "Ok",
+                      "allOf": [{
+                          "$ref": "#/components/responses/IndustryTags"
+                      }]
+                  }
+              }
+          }
+      },
+      "/industry-tags/{industryTagId}": {
+          "parameters": [
+              {"$ref": "#/components/parameters/IndustryTagIdPath"}
+          ],
+          "get": {
+              "tags": ["IndustryTags"],
+              "description": "Get IndustryTag with id",
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "allOf": [{
+                          "$ref": "#/components/responses/IndustryTag"
+                      }]
+                  },
+                  "400": {
+                      "description": "Bad Request",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  },
+                  "404": {
+                      "description": "Not Found",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
+              }
+          },
+          "delete": {
+              "tags": ["IndustryTags"],
+              "description": "Delete IndustryTag with id",
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  },
+                  "400": {
+                      "description": "Bad Request",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  },
+                  "404": {
+                      "description": "Not Found",
+                      "allOf": [{
+                          "$ref": "#/components/responses/GeneralErrorResponse"
+                      }]
+                  }
+              }
+          }
       }
-    },
-    "securityDefinitions": {
-      "api_key": {
-        "type": "apiKey",
-        "name": "api_key",
-        "in": "header"
-      },
-      "petstore_auth": {
-        "type": "oauth2",
-        "authorizationUrl": "https://petstore.swagger.io/oauth/authorize",
-        "flow": "implicit",
-        "scopes": {
-          "read:pets": "read your pets",
-          "write:pets": "modify pets in your account"
-        }
-      }
-    },
-    "definitions": {
-      "ApiResponse": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "integer",
-            "format": "int32"
+  },
+  "components": {
+      "schemas": {
+          "GeneralSchema": {
+              "type": "object",
+              "required": ["message"],
+              "properties": {
+                  "message": {
+                      "type": "string"
+                  }
+              }
           },
-          "type": {
-            "type": "string"
+          "GeneralErrorSchema": {
+              "type": "object",
+              "required": ["errorMessage"],
+              "properties": {
+                  "errorMessage": {
+                      "type": "string"
+                  }
+              }
           },
-          "message": {
-            "type": "string"
-          }
-        }
-      },
-      "Category": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "name": {
-            "type": "string"
-          }
-        },
-        "xml": {
-          "name": "Category"
-        }
-      },
-      "Pet": {
-        "type": "object",
-        "required": [
-          "name",
-          "photoUrls"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "category": {
-            "$ref": "#/definitions/Category"
-          },
-          "name": {
-            "type": "string",
-            "example": "doggie"
-          },
-          "photoUrls": {
-            "type": "array",
-            "xml": {
-              "wrapped": true
-            },
-            "items": {
+          "UserReference": {
               "type": "string",
-              "xml": {
-                "name": "photoUrl"
+              "maxLength": 100
+          },
+          "Payment": {
+              "type": "object",
+              "required": ["payment_method_id"],
+              "properties": {
+                    "payment_method_id": {
+                    "type": "string"
+                  }
               }
-            }
           },
-          "tags": {
-            "type": "array",
-            "xml": {
-              "wrapped": true
-            },
-            "items": {
-              "xml": {
-                "name": "tag"
-              },
-              "$ref": "#/definitions/Tag"
-            }
+          "Job": {
+              "type": "object",
+              "required": [
+                  "title",
+                  "description",
+                  "requirements",
+                  "company",
+                  "country",
+                  "region",
+                  "city",
+                  "job_type",
+                  "job_tags",
+                  "salary",
+                  "deadline",
+                  "posted_by",
+                  "poster_family_name",
+                  "poster_given_name"
+              ],
+              "properties": {
+                  "job_id": {
+                      "type": "number"
+                  },
+                  "title": {
+                      "type": "string",
+                      "maxLength": 255
+                  },
+                  "company": {
+                      "type": "string",
+                      "maxLength": 255
+                  },
+                  "country": {
+                      "type": "string",
+                      "maxLength": 255
+                  },
+                  "region": {
+                      "type": "string",
+                      "maxLength": 255
+                  },
+                  "city": {
+                      "type": "string",
+                      "maxLength": 255
+                  },
+                  "description": {
+                      "type": "string"
+                  },
+                  "requirements": {
+                      "type": "string"
+                  },
+                  "posted_by": {
+                      "type": "string",
+                      "format": "email"
+                  },
+                  "poster_family_name": {
+                      "type": "string",
+                      "maxLength": 100
+                  },
+                  "poster_given_name": {
+                      "type": "string",
+                      "maxLength": 100
+                  },
+                  "people_contacted": {
+                      "type": "number"
+                  },
+                  "job_type": {
+                      "type": "string",
+                      "enum": ["BOARD_POSITION", "REGULAR_JOB"]
+                  },
+                  "job_status": {
+                      "type": "string",
+                      "enum": ["OPEN", "CLOSED"]
+                  },
+                  "job_tags": {
+                      "type": "array",
+                      "items": {
+                          "type": "string",
+                          "enum": ["SOFTWARE", "FINANCE", "LAW"]
+                      }
+                  },
+                  "salary": {
+                      "type": "number"
+                  },
+                  "deadline": {
+                      "type": "number"
+                  },
+                  "created_on": {
+                      "type": "number"
+                  },
+                  "updated_on": {
+                      "type": "number"
+                  }
+              }
           },
-          "status": {
-            "type": "string",
-            "description": "pet status in the store",
-            "enum": [
-              "available",
-              "pending",
-              "sold"
-            ]
+          "JobContact": {
+              "type": "object",
+              "required": [
+                  "posted_by",
+                  "poster_family_name",
+                  "poster_given_name"
+              ],
+              "properties": {
+                  "posted_by": {
+                      "type": "string",
+                      "format": "email"
+                  },
+                  "poster_family_name": {
+                      "type": "string",
+                      "maxLength": 100
+                  },
+                  "poster_given_name": {
+                      "type": "string",
+                      "maxLength": 100
+                  }
+              }
+          },
+          "Jobs": {
+              "type": "object",
+              "required": [
+                  "jobs",
+                  "count"
+              ],
+              "properties": {
+                  "jobs": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/Job"
+                      }
+                  },
+                  "count": {
+                      "type": "integer"
+                  }
+              }
+          },
+          "JobApplication": {
+              "type": "object",
+              "required": [
+                  "job_id",
+                  "applicant_id",
+                  "job_application_status",
+                  "documents"
+              ],
+              "properties": {
+                  "job_application_id": {
+                      "type": "number"
+                  },
+                  "job_id": {
+                      "type":"number"
+                  },
+                  "applicant_id": {
+                      "$ref": "#/components/schemas/UserReference"
+                  },
+                  "job_application_status": {
+                      "type": "string",
+                      "enum": ["SUBMIT", "REVIEW", "OFFER_EXTEND", "OFFER_ACCEPT", "OFFER_REJECT"]
+                  },
+                  "documents": {
+                      "type": "string",
+                      "maxLength": 255
+                  },
+                  "created_on": {
+                      "type": "number"
+                  },
+                  "updated_on": {
+                      "type": "number"
+                  }
+              }
+          },
+          "JobApplications": {
+              "type": "object",
+              "required": [
+                  "job_applications",
+                  "count"
+              ],
+              "properties": {
+                  "job_applications": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/JobApplication"
+                      }
+                  },
+                  "count": {
+                      "type": "integer"
+                  }
+              }
+          },
+          "Chat": {
+              "type": "object",
+              "required": [
+                  "date",
+                  "chat_type",
+                  "description",
+                  "credits",
+                  "chat_status",
+                  "senior_executive"
+              ],
+              "properties": {
+                  "chat_id": {
+                      "type": "number"
+                  },
+                  "date": {
+                      "type": "number"
+                  },
+                  "chat_type": {
+                      "type": "string",
+                      "enum": ["ONE_ON_ONE", "ONE_ON_FOUR"]
+                  },
+                  "description": {
+                      "type": "string",
+                      "maxLength": 255
+                  },
+                  "credits": {
+                      "type": "number"
+                  },
+                  "chat_status": {
+                      "type": "string",
+                      "enum": ["PENDING", "DONE", "CANCELED"]
+                  },
+                  "aspiring_professionals": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/UserReference"
+                      }
+                  },
+                  "senior_executive": {
+                      "$ref": "#/components/schemas/UserReference"
+                  },
+                  "created_on": {
+                      "type": "number"
+                  },
+                  "updated_on": {
+                      "type": "number"
+                  }
+              }
+          },
+          "Chats": {
+              "type": "object",
+              "required": [
+                  "chats",
+                  "count"
+              ],
+              "properties": {
+                  "chats": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/Chat"
+                      }
+                  },
+                  "count": {
+                      "type": "integer"
+                  }
+              }
+          },
+          "IndustryTag": {
+              "type": "object",
+              "required": [
+                  "tag"
+              ],
+              "properties": {
+                  "tag": {
+                      "type": "string",
+                      "maxLength": 100
+                  },
+                  "created_on": {
+                      "type": "number"
+                  },
+                  "updated_on": {
+                      "type": "number"
+                  }
+              }
+          },
+          "IndustryTags": {
+              "type": "object",
+              "required": [
+                  "industry_tags",
+                  "count"
+              ],
+              "properties": {
+                  "industry_tags": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/IndustryTag"
+                      }
+                  },
+                  "count": {
+                      "type": "integer"
+                  }
+              }
           }
-        },
-        "xml": {
-          "name": "Pet"
-        }
       },
-      "Tag": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
+      "responses": {
+          "GeneralResponse": {
+              "description": "General Response",
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": "#/components/schemas/GeneralSchema"
+                      }
+                  }
+              }
           },
-          "name": {
-            "type": "string"
+          "GeneralErrorResponse": {
+              "description": "General Error Response",
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": "#/components/schemas/GeneralErrorSchema"
+                      }
+                  }
+              }
+          },
+          "Job": {
+              "description": "Job Response",
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": "#/components/schemas/Job"
+                      }
+                  }
+              }
+          },
+          "JobContact": {
+              "description": "Job Response",
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": "#/components/schemas/JobContact"
+                      }
+                  }
+              }
+          },
+          "Jobs": {
+              "description": "Jobs Response",
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": "#/components/schemas/Jobs"
+                      }
+                  }
+              }
+          },
+          "JobApplication": {
+              "description": "Job Application Response",
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": "#/components/schemas/JobApplication"
+                      }
+                  }
+              }
+          },
+          "JobApplications": {
+              "description": "Job Applications Response",
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": "#/components/schemas/JobApplications"
+                      }
+                  }
+              }
+          },
+          "Chat": {
+              "description": "Chat Response",
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": "#/components/schemas/Chat"
+                      }
+                  }
+              }
+          },
+          "Chats": {
+              "description": "Chats Response",
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": "#/components/schemas/Chats"
+                      }
+                  }
+              }
+          },
+          "IndustryTag": {
+              "description": "Industry Tag Response",
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": "#/components/schemas/IndustryTag"
+                      }
+                  }
+              }
+          },
+          "IndustryTags": {
+              "description": "Industry Tags Response",
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": "#/components/schemas/IndustryTags"
+                      }
+                  }
+              }
           }
-        },
-        "xml": {
-          "name": "Tag"
-        }
       },
-      "Order": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
+      "parameters": {
+          "UserIdPath": {
+              "name": "userId",
+              "in": "path",
+              "description": "id of user",
+              "required": true,
+              "schema": {
+                  "$ref": "#/components/schemas/UserReference"
+              }
           },
-          "petId": {
-            "type": "integer",
-            "format": "int64"
+          "UserIdQuery": {
+              "name": "userId",
+              "in": "query",
+              "description": "id of user",
+              "required": true,
+              "schema": {
+                  "$ref": "#/components/schemas/UserReference"
+              }
           },
-          "quantity": {
-            "type": "integer",
-            "format": "int32"
+          "JobIdPath": {
+              "name": "jobId",
+              "in": "path",
+              "description": "id of job",
+              "required": true,
+              "schema": {
+                  "$ref": "#/components/schemas/Job/properties/job_id"
+              }
           },
-          "shipDate": {
-            "type": "string",
-            "format": "date-time"
+          "JobIdQuery": {
+              "name": "jobId",
+              "in": "query",
+              "description": "id of job",
+              "required": true,
+              "schema": {
+                  "$ref": "#/components/schemas/Job/properties/job_id"
+              }
           },
-          "status": {
-            "type": "string",
-            "description": "Order Status",
-            "enum": [
-              "placed",
-              "approved",
-              "delivered"
-            ]
+          "JobApplicationIdPath": {
+              "name": "jobApplicationId",
+              "in": "path",
+              "description": "id of job applicationId",
+              "required": true,
+              "schema": {
+                  "$ref": "#/components/schemas/JobApplication/properties/job_application_id"
+              }
           },
-          "complete": {
-            "type": "boolean"
+          "JobApplicationIdQuery": {
+              "name": "jobApplicationId",
+              "in": "query",
+              "description": "id of job applicationId",
+              "required": true,
+              "schema": {
+                  "$ref": "#/components/schemas/JobApplication/properties/job_application_id"
+              }
+          },
+          "ChatIdPath": {
+              "name": "chatId",
+              "in": "path",
+              "description": "id of chat",
+              "required": true,
+              "schema": {
+                  "$ref": "#/components/schemas/Chat/properties/chat_id"
+              }
+          },
+          "ChatIdQuery": {
+              "name": "chatId",
+              "in": "query",
+              "description": "id of chat",
+              "required": true,
+              "schema": {
+                  "$ref": "#/components/schemas/Chat/properties/chat_id"
+              }
+          },
+          "IndustryTagIdPath": {
+              "name": "industryTagId",
+              "in": "path",
+              "description": "id of industry_tag",
+              "required": true,
+              "schema": {
+                  "$ref": "#/components/schemas/IndustryTag/properties/tag"
+              }
+          },
+          "IndustryTagIdQuery": {
+              "name": "industryTagId",
+              "in": "query",
+              "description": "id of industry_tag",
+              "required": true,
+              "schema": {
+                  "$ref": "#/components/schemas/IndustryTag/properties/tag"
+              }
           }
-        },
-        "xml": {
-          "name": "Order"
-        }
-      },
-      "User": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "username": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "phone": {
-            "type": "string"
-          },
-          "userStatus": {
-            "type": "integer",
-            "format": "int32",
-            "description": "User Status"
-          }
-        },
-        "xml": {
-          "name": "User"
-        }
       }
-    },
-    "externalDocs": {
-      "description": "Find out more about Swagger",
-      "url": "http://swagger.io"
-    }
   }
+}
