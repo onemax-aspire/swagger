@@ -5,7 +5,7 @@
       "title": "MAX Aspire API",
       "description": "MAX Aspire API Documentation"
   },
-  "host": "https://vx4dosp9t1.execute-api.us-east-1.amazonaws.com/",
+  "host": "vx4dosp9t1.execute-api.us-east-1.amazonaws.com",
   "basePath": "/Prod",
   "tags": [
       {
