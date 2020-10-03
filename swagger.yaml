@@ -4,10 +4,12 @@ info:
   title: MAX Aspire API
   description: MAX Aspire API Documentation
 servers:
-  - url: 'vx4dosp9t1.execute-api.us-east-1.amazonaws.com/Prod'
+  - url: 'nv4pftutrf.execute-api.us-east-1.amazonaws.com/Prod'
 tags:
   - name: Chats
     description: API for Chats Service
+  - name: ConnectSE
+    description: API for Connect SE Service
   - name: Jobs
     description: API for Jobs Service
   - name: JobApplications
@@ -440,7 +442,7 @@ paths:
   '/connect':
     post:
       tags:
-        - Connect_SE
+        - ConnectSE
       description: Create new SE Connection
       requestBody:
         content:
@@ -460,7 +462,7 @@ paths:
             - $ref: '#/components/responses/GeneralErrorResponse'
     get:
       tags:
-        - Connect_SE
+        - ConnectSE
       description: Get All SE Connections
       parameters:
         - name: status
@@ -491,7 +493,7 @@ paths:
       - $ref: '#/components/parameters/ConnectSEIdPath'
     get:
       tags:
-        - Connect_SE
+        - ConnectSE
       description: Get SE Connection with id
       responses:
         '200':
@@ -508,7 +510,7 @@ paths:
             - $ref: '#/components/responses/GeneralErrorResponse'
     put:
       tags:
-        - Connect_SE
+        - ConnectSE
       description: Edit SE Connection with id
       responses:
         '200':
@@ -525,7 +527,7 @@ paths:
             - $ref: '#/components/responses/GeneralErrorResponse'
     delete:
       tags:
-        - Connect_SE
+        - ConnectSE
       description: Delete SE Connection with id
       responses:
         '200':
@@ -797,6 +799,13 @@ components:
         requestee:
           type: string
           format: email
+        connect_status:
+          type: string
+          enum:
+            - PENDING
+            - ACCEPTED
+            - CANCELLED
+            - DECLINED
         created_on:
           type: number
         updated_on:
