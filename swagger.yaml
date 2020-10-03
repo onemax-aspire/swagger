@@ -4,7 +4,7 @@ info:
   title: MAX Aspire API
   description: MAX Aspire API Documentation
 servers:
-  - url: 'nv4pftutrf.execute-api.us-east-1.amazonaws.com/Prod'
+  - url: 'https://nv4pftutrf.execute-api.us-east-1.amazonaws.com/Prod'
 tags:
   - name: Chats
     description: API for Chats Service
