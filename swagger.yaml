@@ -5,6 +5,8 @@ info:
   description: MAX Aspire API Documentation
 servers:
   - url: 'https://nv4pftutrf.execute-api.us-east-1.amazonaws.com/Prod'
+security:
+  - bearerAuth: []
 tags:
   - name: Chats
     description: API for Chats Service
@@ -541,6 +543,11 @@ paths:
           allOf:
             - $ref: '#/components/responses/GeneralErrorResponse'
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     GeneralSchema:
       type: object
