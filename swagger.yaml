@@ -454,10 +454,33 @@ paths:
           description: Bad Request
           allOf:
             - $ref: '#/components/responses/GeneralErrorResponse'
+        '409':
+          description: Conflict
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
     get:
       tags:
         - Connect_SE
       description: Get All SE Connections
+      parameters:
+        - name: status
+          in: query
+          description: filter response by connect_status
+          required: false
+          schema:
+            $ref: '#/components/schemas/ConnectSE/properties/connect_status'
+        - name: requestor
+          in: query
+          description: filter response by requestor
+          required: false
+          schema:
+            type: '#/components/schemas/ConnectSE/properties/requestor'
+        - name: requestee
+          in: query
+          description: filter response by requestee
+          required: false
+          schema:
+            type: '#/components/schemas/ConnectSE/properties/requestee'
       responses:
         '200':
           description: Ok
