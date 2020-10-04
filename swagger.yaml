@@ -478,13 +478,13 @@ paths:
           description: filter response by requestor
           required: false
           schema:
-            type: '#/components/schemas/ConnectSE/properties/requestor'
+            $ref: '#/components/schemas/ConnectSE/properties/requestor'
         - name: requestee
           in: query
           description: filter response by requestee
           required: false
           schema:
-            type: '#/components/schemas/ConnectSE/properties/requestee'
+            $ref: '#/components/schemas/ConnectSE/properties/requestee'
       responses:
         '200':
           description: Ok
