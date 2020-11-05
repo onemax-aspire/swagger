@@ -129,244 +129,236 @@ paths:
           description: OK
         '404':
           description: Not Found
-  # /jobs:
-  #   post:
-  #     tags:
-  #       - Jobs
-  #     description: Create new Job
-  #     requestBody:
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: '#/components/schemas/Job'
-  #     responses:
-  #       '201':
-  #         description: OK
-  #         allOf:
-  #           - $ref: '#/components/responses/Jobs'
-  #       '401':
-  #         description: UnAuthorized
-  #         allOf:
-  #           - $ref: '#/components/responses/GeneralErrorResponse'
-  #       '426':
-  #         description: Upgrade Membership
-  #         allOf:
-  #           - $ref: '#/components/responses/GeneralErrorResponse'
-  #   get:
-  #     tags:
-  #       - Jobs
-  #     description: Get All Jobs
-  #     parameters:
-  #       - name: user_id
-  #         in: query
-  #         description: filter jobs by user_id
-  #         required: false
-  #         schema:
-  #           type: email
-  #       - name: status
-  #         in: query
-  #         description: filter jobs by status (open or closed)
-  #         required: false
-  #         schema:
-  #           type: string
-  #           enum:
-  #             - OPEN
-  #             - CLOSED
-  #       - name: page
-  #         in: query
-  #         description: filter jobs by page
-  #         required: false
-  #         schema:
-  #           type: integer
-  #       - name: page_size
-  #         in: query
-  #         description: 'specifies page_size for page, default is 3 when not specified'
-  #         required: false
-  #         schema:
-  #           type: integer
-  #     responses:
-  #       '200':
-  #         description: Ok
-  #         allOf:
-  #           - $ref: '#/components/responses/Jobs'
-  # '/jobs/{jobId}':
-  #   parameters:
-  #     - $ref: '#/components/parameters/JobIdPath'
-  #   get:
-  #     tags:
-  #       - Jobs
-  #     description: Get Job with id
-  #     responses:
-  #       '200':
-  #         description: OK
-  #         allOf:
-  #           - $ref: '#/components/responses/Job'
-  #       '404':
-  #         description: Not Found
-  #         allOf:
-  #           - $ref: '#/components/responses/GeneralErrorResponse'
-  #   put:
-  #     tags:
-  #       - Jobs
-  #     description: Update Job with id
-  #     requestBody:
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: '#/components/schemas/Job'
-  #     responses:
-  #       '200':
-  #         description: OK
-  #         allOf:
-  #           - $ref: '#/components/responses/GeneralResponse'
-  #       '404':
-  #         description: Not Found
-  #         allOf:
-  #           - $ref: '#/components/responses/GeneralErrorResponse'
-  #   delete:
-  #     tags:
-  #       - Jobs
-  #     description: Delete Job with id
-  #     responses:
-  #       '200':
-  #         description: OK
-  #         allOf:
-  #           - $ref: '#/components/responses/GeneralResponse'
-  #       '404':
-  #         description: Not Found
-  #         allOf:
-  #           - $ref: '#/components/responses/GeneralErrorResponse'
-  #       '409':
-  #         description: Conflict
-  #         allOf:
-  #           - $ref: '#/components/responses/GeneralErrorResponse'
-  # '/jobs/{jobId}/close':
-  #   parameters:
-  #     - $ref: '#/components/parameters/JobIdPath'
-  #   put:
-  #     tags:
-  #       - Jobs
-  #     description: Update Job status to CLOSED
-  #     responses:
-  #       '200':
-  #         description: OK
-  #         allOf:
-  #           - $ref: '#/components/responses/GeneralResponse'
-  #       '404':
-  #         description: Not Found
-  #         allOf:
-  #           - $ref: '#/components/responses/GeneralErrorResponse'
-  # '/job_contact/{jobId}':
-  #   parameters:
-  #     - $ref: '#/components/parameters/JobIdPath'
-  #   get:
-  #     tags:
-  #       - Jobs
-  #     description: Get Contact Information of the person who posted the job
-  #     responses:
-  #       '200':
-  #         description: OK
-  #         allOf:
-  #           - $ref: '#/components/responses/JobContact'
-  #       '401':
-  #         description: Not Found
-  #         allOf:
-  #           - $ref: '#/components/responses/GeneralErrorResponse'
-  #       '402':
-  #         description: Payment Required
-  #         allOf:
-  #           - $ref: '#/components/responses/GeneralErrorResponse'
-  #       '404':
-  #         description: UnAuthorized
-  #         allOf:
-  #           - $ref: '#/components/responses/GeneralErrorResponse'
-  #       '417':
-  #         description: Expectation Failed
-  #         allOf:
-  #           - $ref: '#/components/responses/GeneralErrorResponse'
-  #       '426':
-  #         description: Upgrade Membership
-  #         allOf:
-  #           - $ref: '#/components/responses/GeneralErrorResponse'
-  #       '428':
-  #         description: Pre-Condition Required
-  #         allOf:
-  #           - $ref: '#/components/responses/GeneralErrorResponse'
-  # /job-applications:
-  #   post:
-  #     tags:
-  #      - JobApplications
-  #    description: Create new Job Applications
-  #    requestBody:
-  #      content:
-  #        application/json:
-  #          schema:
-  #            $ref: '#/components/schemas/JobApplication'
-  #    responses:
-  #      '201':
-  #        description: Created
-  #      '426':
-  #        description: Insufficient Privileges
-  #        allOf:
-  #          - $ref: '#/components/responses/GeneralErrorResponse'
-  #  get:
-  #    tags:
-  #      - JobApplications
-  #    description: Get All Job Applications
-  #    responses:
-  #      '200':
-  #        description: Ok
-  #        allOf:
-  #          - $ref: '#/components/responses/JobApplications'
-  #      '404':
-  #        description: Not found
-  #        allOf:
-  #          - $ref: '#/components/responses/JobApplications'
-  #'/job-applications/{jobApplicationId}':
-  #  parameters:
-  #    - $ref: '#/components/parameters/JobApplicationIdPath'
-  #  get:
-  #    tags:
-  #      - JobApplications
-  #    description: Get Job Applications with id
-  #    responses:
-  #      '200':
-  #        description: OK
-  #        allOf:
-  #          - $ref: '#/components/responses/JobApplication'
-  #      '404':
-  #        description: Not Found
-  #        allOf:
-  #          - $ref: '#/components/responses/GeneralErrorResponse'
-  #  put:
-  #    tags:
-  #      - JobApplications
-  #    description: Update Job Applications with id
-  #    requestBody:
-  #      content:
-  #        application/json:
-  #          schema:
-  #            $ref: '#/components/schemas/JobApplication'
-  #    responses:
-  #      '200':
-  #        description: OK
-  #        allOf:
-  #          - $ref: '#/components/schemas/JobApplication'
-  #      '404':
-  #        description: Not Found
-  #        allOf:
-  #          - $ref: '#/components/responses/GeneralErrorResponse'
-  #  delete:
-  #    tags:
-  #      - JobApplications
-  #    description: Delete Job Applications with id
-  #    responses:
-  #      '200':
-  #        description: OK
-  #      '404':
-  #        description: Not Found
-  #        allOf:
-  #          - $ref: '#/components/responses/GeneralErrorResponse'
+  /jobs:
+    post:
+      tags:
+        - Jobs
+      description: Create new Job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Job'
+      responses:
+        '201':
+          description: OK
+          allOf:
+            - $ref: '#/components/responses/Jobs'
+        '401':
+          description: UnAuthorized
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+    get:
+      tags:
+        - Jobs
+      description: Get All Jobs
+      parameters:
+        - name: user_id
+          in: query
+          description: filter jobs by user_id
+          required: false
+          schema:
+            type: email
+        - name: status
+          in: query
+          description: filter jobs by status (open or closed)
+          required: false
+          schema:
+            type: string
+            enum:
+              - OPEN
+              - CLOSED
+        - name: page
+          in: query
+          description: filter jobs by page
+          required: false
+          schema:
+            type: integer
+        - name: page_size
+          in: query
+          description: 'specifies page_size for page, default is 3 when not specified'
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ok
+          allOf:
+            - $ref: '#/components/responses/Jobs'
+  '/jobs/{jobId}':
+    parameters:
+      - $ref: '#/components/parameters/JobIdPath'
+    get:
+      tags:
+        - Jobs
+      description: Get Job with id
+      responses:
+        '200':
+          description: OK
+          allOf:
+            - $ref: '#/components/responses/Job'
+        '404':
+          description: Not Found
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+    put:
+      tags:
+        - Jobs
+      description: Update Job with id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Job'
+      responses:
+        '200':
+          description: OK
+          allOf:
+            - $ref: '#/components/responses/GeneralResponse'
+        '404':
+          description: Not Found
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+    delete:
+      tags:
+        - Jobs
+      description: Delete Job with id
+      responses:
+        '200':
+          description: OK
+          allOf:
+            - $ref: '#/components/responses/GeneralResponse'
+        '404':
+          description: Not Found
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+        '409':
+          description: Conflict
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+  '/jobs/{jobId}/close':
+    parameters:
+      - $ref: '#/components/parameters/JobIdPath'
+    put:
+      tags:
+        - Jobs
+      description: Update Job status to CLOSED
+      responses:
+        '200':
+          description: OK
+          allOf:
+            - $ref: '#/components/responses/GeneralResponse'
+        '404':
+          description: Not Found
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+  '/job_contact/{jobId}':
+    parameters:
+      - $ref: '#/components/parameters/JobIdPath'
+    get:
+      tags:
+        - Jobs
+      description: Get Contact Information of the person who posted the job
+      responses:
+        '200':
+          description: OK
+          allOf:
+            - $ref: '#/components/responses/JobContact'
+        '401':
+          description: Not Found
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+        '402':
+          description: Payment Required
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+        '404':
+          description: UnAuthorized
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+        '417':
+          description: Expectation Failed
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+        '428':
+          description: Pre-Condition Required
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+  '/job-applications':
+    post:
+      tags:
+       - JobApplications
+      description: Create new Job Applications
+      requestBody:
+       content:
+         application/json:
+           schema:
+             $ref: '#/components/schemas/JobApplication'
+      responses:
+       '201':
+         description: Created
+       '426':
+         description: Insufficient Privileges
+         allOf:
+           - $ref: '#/components/responses/GeneralErrorResponse'
+    get:
+     tags:
+       - JobApplications
+     description: Get All Job Applications
+     responses:
+       '200':
+         description: Ok
+         allOf:
+           - $ref: '#/components/responses/JobApplications'
+       '404':
+         description: Not found
+         allOf:
+           - $ref: '#/components/responses/JobApplications'
+  '/job-applications/{jobApplicationId}':
+   parameters:
+     - $ref: '#/components/parameters/JobApplicationIdPath'
+   get:
+     tags:
+       - JobApplications
+     description: Get Job Applications with id
+     responses:
+       '200':
+         description: OK
+         allOf:
+           - $ref: '#/components/responses/JobApplication'
+       '404':
+         description: Not Found
+         allOf:
+           - $ref: '#/components/responses/GeneralErrorResponse'
+   put:
+     tags:
+       - JobApplications
+     description: Update Job Applications with id
+     requestBody:
+       content:
+         application/json:
+           schema:
+             $ref: '#/components/schemas/JobApplication'
+     responses:
+       '200':
+         description: OK
+         allOf:
+           - $ref: '#/components/schemas/JobApplication'
+       '404':
+         description: Not Found
+         allOf:
+           - $ref: '#/components/responses/GeneralErrorResponse'
+   delete:
+     tags:
+       - JobApplications
+     description: Delete Job Applications with id
+     responses:
+       '200':
+         description: OK
+       '404':
+         description: Not Found
+         allOf:
+           - $ref: '#/components/responses/GeneralErrorResponse'
   '/industry-tags':
     post:
       tags:
