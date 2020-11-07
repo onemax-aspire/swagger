@@ -166,7 +166,10 @@ paths:
           schema:
             type: string
             enum:
-              - OPEN
+              - UNDER_REVIEW
+              - ACTIVE
+              - REJECTED
+              - EXPIRED
               - CLOSED
         - name: page
           in: query
