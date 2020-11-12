@@ -8,8 +8,8 @@ servers:
 security:
   - bearerAuth: []
 tags:
-  - name: Chats
-    description: API for Chats Service
+  - name: Chat
+    description: API for Chat Service
   - name: ConnectSE
     description: API for Connect SE Service
   - name: Jobs
@@ -37,10 +37,10 @@ paths:
       responses:
         '201':
           description: Created
-  /chats:
+  '/chats':
     post:
       tags:
-        - Chats
+        - Chat
       description: Create new Chat
       requestBody:
         content:
@@ -60,19 +60,40 @@ paths:
             - $ref: '#/components/responses/GeneralErrorResponse'
     get:
       tags:
-        - Chats
+        - Chat
       description: Get All Chats
       responses:
         '200':
           description: Ok
           allOf:
             - $ref: '#/components/responses/Chats'
+  '/chats/create-multiple':
+    post:
+      tags:
+        - Chat
+      description: Create new Chats
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Chats'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+        '401':
+          description: Unauthorized
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
   '/chats/{chatId}':
     parameters:
       - $ref: '#/components/parameters/ChatIdPath'
     get:
       tags:
-        - Chats
+        - Chat
       description: Get Chat with id
       responses:
         '200':
@@ -89,7 +110,7 @@ paths:
             - $ref: '#/components/responses/GeneralErrorResponse'
     put:
       tags:
-        - Chats
+        - Chat
       description: Update Chat with id
       requestBody:
         content:
@@ -113,7 +134,7 @@ paths:
             - $ref: '#/components/responses/GeneralErrorResponse'
     delete:
       tags:
-        - Chats
+        - Chat
       description: Delete Chat with id
       responses:
         '200':
@@ -135,7 +156,7 @@ paths:
       - $ref: '#/components/parameters/ChatIdPath'
     put:
       tags:
-        - Chats
+        - Chat
       description: Reserve Chat with id
       responses:
         '200':
@@ -161,7 +182,7 @@ paths:
       - $ref: '#/components/parameters/ChatIdPath'
     put:
       tags:
-        - Chats
+        - Chat
       description: Unreserve Chat with id
       responses:
         '200':
@@ -187,7 +208,7 @@ paths:
       - $ref: '#/components/parameters/ChatIdPath'
     put:
       tags:
-        - Chats
+        - Chat
       description: Cancel Chat with id
       responses:
         '200':
