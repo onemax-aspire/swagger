@@ -62,6 +62,25 @@ paths:
       tags:
         - Chat
       description: Get All Chats
+      parameters:
+        - name: status
+          in: query
+          description: filter response by chat_status
+          required: false
+          schema:
+            $ref: '#/components/schemas/Chat/properties/chat_status'
+        - name: type
+          in: query
+          description: filter response by chat_type
+          required: false
+          schema:
+            $ref: '#/components/schemas/Chat/properties/chat_type'
+        - name: senior_executive
+          in: query
+          description: filter response by senior_executive
+          required: false
+          schema:
+            $ref: '#/components/schemas/Chat/properties/senior_executive'
       responses:
         '200':
           description: Ok
