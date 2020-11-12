@@ -50,12 +50,14 @@ paths:
       responses:
         '201':
           description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/responses/ChatResponse'
         '400':
           description: Bad Request
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+        '401':
+          description: Unauthorized
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
     get:
       tags:
         - Chats
@@ -63,13 +65,11 @@ paths:
       responses:
         '200':
           description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/responses/ChatCollectionResponse'
+          allOf:
+            - $ref: '#/components/responses/Chats'
   '/chats/{chatId}':
     parameters:
-      - $ref: '#/components/parameters/ChatId'
+      - $ref: '#/components/parameters/ChatIdPath'
     get:
       tags:
         - Chats
@@ -77,8 +77,16 @@ paths:
       responses:
         '200':
           description: OK
+          allOf:
+            - $ref: '#/components/responses/IndustryTag'
+        '400':
+          description: Bad Request
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
     put:
       tags:
         - Chats
@@ -91,9 +99,18 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          description: Bad Request
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+        '401':
+          description: Unauthorized
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
-
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
     delete:
       tags:
         - Chats
@@ -101,34 +118,96 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          description: Bad Request
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+        '401':
+          description: Unauthorized
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
   '/chats/{chatId}/reserve':
     parameters:
-      - $ref: '#/components/parameters/ChatId'
-      - $ref: '#/components/parameters/UserId'
+      - $ref: '#/components/parameters/ChatIdPath'
     put:
       tags:
         - Chats
-      description: Reserve a chat
+      description: Reserve Chat with id
       responses:
         '200':
           description: OK
+        '400':
+          description: Bad Request
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+        '401':
+          description: Unauthorized
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+        '403':
+          description: Forbidden
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
   '/chats/{chatId}/unreserve':
     parameters:
-      - $ref: '#/components/parameters/ChatId'
-      - $ref: '#/components/parameters/UserId'
+      - $ref: '#/components/parameters/ChatIdPath'
     put:
       tags:
         - Chats
-      description: Unreserve a chat
+      description: Unreserve Chat with id
       responses:
         '200':
           description: OK
+        '400':
+          description: Bad Request
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+        '401':
+          description: Unauthorized
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+        '403':
+          description: Forbidden
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+  '/chats/{chatId}/cancel':
+    parameters:
+      - $ref: '#/components/parameters/ChatIdPath'
+    put:
+      tags:
+        - Chats
+      description: Cancel Chat with id
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+        '401':
+          description: Unauthorized
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+        '403':
+          description: Forbidden
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
+        '404':
+          description: Not Found
+          allOf:
+            - $ref: '#/components/responses/GeneralErrorResponse'
   /jobs:
     post:
       tags:
@@ -571,10 +650,7 @@ components:
     Chat:
       type: object
       required:
-        - date
         - chat_type
-        - description
-        - credits
         - chat_status
         - senior_executive
       properties:
@@ -591,12 +667,17 @@ components:
         description:
           type: string
           maxLength: 255
-        credits:
-          type: number
+        tags:
+          type: array
+          items:
+            type: string
+            maxLength: 100
         chat_status:
           type: string
           enum:
             - PENDING
+            - ACTIVE
+            - RESERVED
             - DONE
             - CANCELED
         aspiring_professionals:
@@ -605,19 +686,26 @@ components:
             $ref: '#/components/schemas/UserReference'
         senior_executive:
           $ref: '#/components/schemas/UserReference'
+        fixed_date:
+          type: number
+        expiry_date:
+          type: number
         created_on:
           type: number
         updated_on:
           type: number
-    ChatCollection:
+    Chats:
       type: object
+      required:
+        - chats
+        - count
       properties:
-        count:
-          type: number
         chats:
           type: array
           items:
-            $ref: "#/components/schemas/Chat"
+            $ref: '#/components/schemas/Chat'
+        count:
+          type: integer
     Job:
       type: object
       required:
@@ -837,18 +925,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/GeneralErrorSchema'
-    ChatResponse:
+    Chat:
       description: Chat Response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Chat'
-    ChatCollectionResponse:
-      description: Chat Response
+    Chats:
+      description: Chats Response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ChatCollection'
+            $ref: '#/components/schemas/Chats'
     Job:
       description: Job Response
       content:
@@ -939,9 +1027,16 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/JobApplication/properties/job_application_id'
-    ChatId:
+    ChatIdPath:
       name: chatId
       in: path
+      description: id of chat
+      required: true
+      schema:
+        $ref: '#/components/schemas/Chat/properties/chat_id'
+    ChatIdQuery:
+      name: ChatId
+      in: query
       description: id of chat
       required: true
       schema:
