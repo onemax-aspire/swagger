@@ -814,22 +814,22 @@ components:
           items:
             type: string
             enum:
-              ACCOUNTING
-              BUSINESS
-              APPLIED_ARTS__CREATIVES
-              CONSULTING
-              EDUCATION
-              ENGINEERING
-              ENTERTAINMENT__PERFORMING_ARTS
-              FINANCE
-              HEALTH_CARE
-              JOURNALISM
-              LAW__LEGAL__GOVERNMENT
-              NON_PROFIT__COMMUNITY_BUILDING
-              SCIENCES
-              SOCIAL_SCIENCES__HUMANITIES
-              TECHNOLOGY
-              OTHER
+              - ACCOUNTING
+              - BUSINESS
+              - APPLIED_ARTS__CREATIVES
+              - CONSULTING
+              - EDUCATION
+              - ENGINEERING
+              - ENTERTAINMENT__PERFORMING_ARTS
+              - FINANCE
+              - HEALTH_CARE
+              - JOURNALISM
+              - LAW__LEGAL__GOVERNMENT
+              - NON_PROFIT__COMMUNITY_BUILDING
+              - SCIENCES
+              - SOCIAL_SCIENCES__HUMANITIES
+              - TECHNOLOGY
+              - OTHER
 
         salary:
           type: number
