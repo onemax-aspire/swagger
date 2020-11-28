@@ -830,7 +830,6 @@ components:
               - SOCIAL_SCIENCES__HUMANITIES
               - TECHNOLOGY
               - OTHER
-
         salary:
           type: number
         deadline:
