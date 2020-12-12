@@ -656,6 +656,20 @@ paths:
           description: Not Found
           allOf:
             - $ref: '#/components/responses/GeneralErrorResponse'
+  '/users/{userId}':
+    parameters:
+      - $ref: '#/components/parameters/UserId'
+    post:
+      tags:
+        - User
+      description: Update User with Id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
 components:
   securitySchemes:
     bearerAuth:
@@ -686,6 +700,21 @@ components:
         - payment_method_id
       properties:
         payment_method_id:
+          type: string
+    User:
+      type: object
+      properties:
+        user_id:
+          type: string
+          format: email
+        user_type:
+          type: string
+          enum:
+            - FREE
+            - PAID
+            - MENTOR
+            - ADMIN
+        birthdate:
           type: string
     Chat:
       type: object
@@ -1007,6 +1036,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/GeneralErrorSchema'
+    User:
+      description: User Response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
     Chat:
       description: Chat Response
       content:
@@ -1080,13 +1115,20 @@ components:
           schema:
             $ref: '#/components/schemas/Connects'
   parameters:
-    UserId:
+    UserIdPath:
+      name: userId
+      in: path
+      description: id of user
+      required: true
+      schema:
+        $ref: '#/components/schemas/User/properties/user_id'
+    UserIdQuery:
       name: userId
       in: query
       description: id of user
       required: true
       schema:
-        $ref: '#/components/schemas/UserReference'
+        $ref: '#/components/schemas/User/properties/user_id'
     JobIdPath:
       name: jobId
       in: path
