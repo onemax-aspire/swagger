@@ -4,7 +4,7 @@ info:
   title: MAX Aspire API
   description: MAX Aspire API Documentation
 servers:
-  - url: 'https://nv4pftutrf.execute-api.us-east-1.amazonaws.com/Prod'
+  - url: 'https://services-d.aspire.maxgala.com/api'
 security:
   - bearerAuth: []
 tags:
@@ -127,8 +127,10 @@ paths:
       responses:
         '200':
           description: OK
-          allOf:
-            - $ref: '#/components/responses/IndustryTag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/IndustryTag'
         '400':
           description: Bad Request
           content:
@@ -143,8 +145,10 @@ paths:
                 $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
     put:
       tags:
         - Chat
@@ -171,8 +175,10 @@ paths:
                 $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
     delete:
       tags:
         - Chat
@@ -194,8 +200,10 @@ paths:
                 $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
   '/chats/{chatId}/reserve':
     parameters:
       - $ref: '#/components/parameters/ChatIdPath'
@@ -220,12 +228,16 @@ paths:
                 $ref: '#/components/responses/GeneralErrorResponse'
         '403':
           description: Forbidden
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
   '/chats/{chatId}/unreserve':
     parameters:
       - $ref: '#/components/parameters/ChatIdPath'
@@ -250,12 +262,16 @@ paths:
                 $ref: '#/components/responses/GeneralErrorResponse'
         '403':
           description: Forbidden
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
   '/chats/{chatId}/cancel':
     parameters:
       - $ref: '#/components/parameters/ChatIdPath'
@@ -280,12 +296,16 @@ paths:
                 $ref: '#/components/responses/GeneralErrorResponse'
         '403':
           description: Forbidden
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
   /jobs:
     post:
       tags:
@@ -299,12 +319,16 @@ paths:
       responses:
         '201':
           description: OK
-          allOf:
-            - $ref: '#/components/responses/Jobs'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Jobs'
         '401':
           description: UnAuthorized
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
     get:
       tags:
         - Jobs
@@ -315,7 +339,7 @@ paths:
           description: filter jobs by user_id
           required: false
           schema:
-            type: email
+            type: string
         - name: status
           in: query
           description: filter jobs by status (open or closed)
@@ -343,8 +367,10 @@ paths:
       responses:
         '200':
           description: Ok
-          allOf:
-            - $ref: '#/components/responses/Jobs'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Jobs'
   '/jobs/{jobId}':
     parameters:
       - $ref: '#/components/parameters/JobIdPath'
@@ -355,12 +381,16 @@ paths:
       responses:
         '200':
           description: OK
-          allOf:
-            - $ref: '#/components/responses/Job'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Job'
         '404':
           description: Not Found
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
     put:
       tags:
         - Jobs
@@ -373,12 +403,16 @@ paths:
       responses:
         '200':
           description: OK
-          allOf:
-            - $ref: '#/components/responses/GeneralResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralResponse'
         '404':
           description: Not Found
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
     delete:
       tags:
         - Jobs
@@ -386,16 +420,22 @@ paths:
       responses:
         '200':
           description: OK
-          allOf:
-            - $ref: '#/components/responses/GeneralResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralResponse'
         '404':
           description: Not Found
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '409':
           description: Conflict
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
   '/jobs/{jobId}/close':
     parameters:
       - $ref: '#/components/parameters/JobIdPath'
@@ -406,12 +446,16 @@ paths:
       responses:
         '200':
           description: OK
-          allOf:
-            - $ref: '#/components/responses/GeneralResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralResponse'
         '404':
           description: Not Found
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
   '/job_contact/{jobId}':
     parameters:
       - $ref: '#/components/parameters/JobIdPath'
@@ -422,8 +466,10 @@ paths:
       responses:
         '200':
           description: OK
-          allOf:
-            - $ref: '#/components/responses/JobContact'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/JobContact'
         '400':
           description: Bad Request
           content:
@@ -438,20 +484,28 @@ paths:
                 $ref: '#/components/responses/GeneralErrorResponse'
         '402':
           description: Payment Required
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: UnAuthorized
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '417':
           description: Expectation Failed
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '428':
           description: Pre-Condition Required
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
   '/job-applications':
     post:
       tags:
@@ -467,8 +521,10 @@ paths:
          description: Created
        '426':
          description: Insufficient Privileges
-         allOf:
-           - $ref: '#/components/responses/GeneralErrorResponse'
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
     get:
      tags:
        - JobApplications
@@ -476,12 +532,16 @@ paths:
      responses:
        '200':
          description: Ok
-         allOf:
-           - $ref: '#/components/responses/JobApplications'
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/JobApplications'
        '404':
          description: Not found
-         allOf:
-           - $ref: '#/components/responses/JobApplications'
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
   '/job-applications/{jobApplicationId}':
    parameters:
      - $ref: '#/components/parameters/JobApplicationIdPath'
@@ -492,12 +552,16 @@ paths:
      responses:
        '200':
          description: OK
-         allOf:
-           - $ref: '#/components/responses/JobApplication'
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/JobApplication'
        '404':
          description: Not Found
-         allOf:
-           - $ref: '#/components/responses/GeneralErrorResponse'
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
    put:
      tags:
        - JobApplications
@@ -510,12 +574,16 @@ paths:
      responses:
        '200':
          description: OK
-         allOf:
-           - $ref: '#/components/schemas/JobApplication'
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobApplication'
        '404':
          description: Not Found
-         allOf:
-           - $ref: '#/components/responses/GeneralErrorResponse'
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
    delete:
      tags:
        - JobApplications
@@ -525,8 +593,10 @@ paths:
          description: OK
        '404':
          description: Not Found
-         allOf:
-           - $ref: '#/components/responses/GeneralErrorResponse'
+         content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
   '/industry-tags':
     post:
       tags:
@@ -542,8 +612,10 @@ paths:
           description: Created
         '400':
           description: Bad Request
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
     get:
       tags:
         - IndustryTags
@@ -564,8 +636,10 @@ paths:
       responses:
         '200':
           description: Ok
-          allOf:
-            - $ref: '#/components/responses/IndustryTags'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
   '/industry-tags/{industryTagId}':
     parameters:
       - $ref: '#/components/parameters/IndustryTagIdPath'
@@ -576,16 +650,22 @@ paths:
       responses:
         '200':
           description: OK
-          allOf:
-            - $ref: '#/components/responses/IndustryTag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/IndustryTag'
         '400':
           description: Bad Request
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
     delete:
       tags:
         - IndustryTags
@@ -595,12 +675,16 @@ paths:
           description: OK
         '400':
           description: Bad Request
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
   '/connect':
     post:
       tags:
@@ -616,12 +700,16 @@ paths:
           description: Created
         '400':
           description: Bad Request
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '409':
           description: Conflict
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
     get:
       tags:
         - Connect
@@ -648,8 +736,10 @@ paths:
       responses:
         '200':
           description: Ok
-          allOf:
-            - $ref: '#/components/responses/Connects'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Connects'
   '/connect/{connectId}':
     parameters:
       - $ref: '#/components/parameters/ConnectIdPath'
@@ -660,16 +750,22 @@ paths:
       responses:
         '200':
           description: OK
-          allOf:
-            - $ref: '#/components/responses/Connect'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Connect'
         '400':
           description: Bad Request
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
     put:
       tags:
         - Connect
@@ -677,16 +773,22 @@ paths:
       responses:
         '200':
           description: OK
-          allOf:
-            - $ref: '#/components/responses/Connect'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '400':
           description: Bad Request
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
     delete:
       tags:
         - Connect
@@ -696,15 +798,19 @@ paths:
           description: OK
         '400':
           description: Bad Request
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
   '/users/{userId}':
     parameters:
-      - $ref: '#/components/parameters/UserId'
+      - $ref: '#/components/parameters/UserIdPath'
     post:
       tags:
         - User
@@ -716,6 +822,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
 components:
   securitySchemes:
     bearerAuth:
