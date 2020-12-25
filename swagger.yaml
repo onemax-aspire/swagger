@@ -52,12 +52,16 @@ paths:
           description: Created
         '400':
           description: Bad Request
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '401':
           description: Unauthorized
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
     get:
       tags:
         - Chat
@@ -84,8 +88,10 @@ paths:
       responses:
         '200':
           description: Ok
-          allOf:
-            - $ref: '#/components/responses/Chats'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chats'
   '/chats/create-multiple':
     post:
       tags:
@@ -101,12 +107,16 @@ paths:
           description: Created
         '400':
           description: Bad Request
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '401':
           description: Unauthorized
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
   '/chats/{chatId}':
     parameters:
       - $ref: '#/components/parameters/ChatIdPath'
@@ -121,8 +131,16 @@ paths:
             - $ref: '#/components/responses/IndustryTag'
         '400':
           description: Bad Request
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
           allOf:
@@ -141,12 +159,16 @@ paths:
           description: OK
         '400':
           description: Bad Request
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '401':
           description: Unauthorized
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
           allOf:
@@ -160,12 +182,16 @@ paths:
           description: OK
         '400':
           description: Bad Request
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '401':
           description: Unauthorized
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '404':
           description: Not Found
           allOf:
@@ -182,12 +208,16 @@ paths:
           description: OK
         '400':
           description: Bad Request
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '401':
           description: Unauthorized
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '403':
           description: Forbidden
           allOf:
@@ -208,12 +238,16 @@ paths:
           description: OK
         '400':
           description: Bad Request
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '401':
           description: Unauthorized
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '403':
           description: Forbidden
           allOf:
@@ -234,12 +268,16 @@ paths:
           description: OK
         '400':
           description: Bad Request
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '401':
           description: Unauthorized
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '403':
           description: Forbidden
           allOf:
@@ -386,10 +424,18 @@ paths:
           description: OK
           allOf:
             - $ref: '#/components/responses/JobContact'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '401':
-          description: Not Found
-          allOf:
-            - $ref: '#/components/responses/GeneralErrorResponse'
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
         '402':
           description: Payment Required
           allOf:
@@ -731,7 +777,6 @@ components:
           type: string
           enum:
             - ONE_ON_ONE
-            - ONE_ON_FOUR
             - MOCK_INTERVIEW
         description:
           type: string
@@ -763,6 +808,22 @@ components:
           type: number
         updated_on:
           type: number
+        se_given_name:
+          type: string
+        se_family_name:
+          type: string
+        se_picture:
+          type: string
+        se_company:
+          type: string
+        se_position:
+          type: string
+        se_region:
+          type: string
+        se_industry_tags:
+          type: array
+          items:
+            type: string
     Chats:
       type: object
       required:
