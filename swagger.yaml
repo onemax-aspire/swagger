@@ -847,11 +847,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/responses/GeneralErrorResponse'
-  '/user/upgrade':
+  '/users/upgrade':
     put:
       tags:
         - User
-      description: Upgrade FREE user to PAID
+      description: Upgrade FREE user to PAID, need to pass in id token of FREE user
       responses:
         '200':
           description: Success
