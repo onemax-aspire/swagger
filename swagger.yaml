@@ -720,19 +720,19 @@ paths:
           description: filter response by connect_status
           required: false
           schema:
-            $ref: '#/components/schemas/Connect/properties/connect_status'
+            $ref: '#/components/schemas/GetConnection/properties/connect_status'
         - name: requestor
           in: query
           description: filter response by requestor
           required: false
           schema:
-            $ref: '#/components/schemas/Connect/properties/requestor'
+            $ref: '#/components/schemas/GetConnection/properties/requestor'
         - name: requestee
           in: query
           description: filter response by requestee
           required: false
           schema:
-            $ref: '#/components/schemas/Connect/properties/requestee'
+            $ref: '#/components/schemas/GetConnection/properties/requestee'
       responses:
         '200':
           description: Ok
@@ -753,7 +753,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/Connect'
+                $ref: '#/components/responses/GetConnection'
         '400':
           description: Bad Request
           content:
@@ -822,6 +822,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
+  '/users/accept-se':
+    post:
+      tags:
+        - User
+      description: Accept SE who signed up through the platform
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcceptSERequest'
+      responses:
+        '200':
+          description: OK
         '404':
           description: Not Found
           content:
@@ -1196,6 +1215,14 @@ components:
             $ref: '#/components/schemas/GetConnection'
         count:
           type: integer
+    AcceptSERequest:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          format: email
   responses:
     GeneralResponse:
       description: General Response
@@ -1364,11 +1391,11 @@ components:
       description: id of Connect_SE
       required: true
       schema:
-        $ref: '#/components/schemas/Connect/properties/connect_id'
+        $ref: '#/components/schemas/GetConnection/properties/connect_id'
     ConnectIdQuery:
       name: connectId
       in: query
       description: id of Connect_SE
       required: true
       schema:
-        $ref: '#/components/schemas/Connect/properties/connect_id'
+        $ref: '#/components/schemas/GetConnection/properties/connect_id'
