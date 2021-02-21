@@ -847,6 +847,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/responses/GeneralErrorResponse'
+  '/user/upgrade':
+    put:
+      tags:
+        - User
+      description: Upgrade FREE user to PAID
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralErrorResponse'
 components:
   securitySchemes:
     bearerAuth:
